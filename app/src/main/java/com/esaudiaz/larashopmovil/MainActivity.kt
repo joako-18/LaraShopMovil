@@ -1,27 +1,17 @@
 package com.esaudiaz.larashopmovil
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 import android.os.Bundle
-import android.util.Log
+import com.esaudiaz.larashopmovil.core.navigation.Screen
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.lifecycleScope
-import com.esaudiaz.larashopmovil.features.categorias.di.CategoriasContainer
+import androidx.navigation.compose.rememberNavController
+import com.esaudiaz.larashopmovil.core.navigation.AppNavGraph
 import com.esaudiaz.larashopmovil.core.ui.theme.LaraShopMovilTheme
-import com.esaudiaz.larashopmovil.features.categorias.presentation.screens.CategoriasScreen
 import com.esaudiaz.larashopmovil.features.categorias.presentation.viewmodels.CategoriaViewModel
-import com.esaudiaz.larashopmovil.features.categorias.presentation.viewmodels.CategoriaViewModelFactory
-import kotlinx.coroutines.launch
+
 
 class MainActivity : ComponentActivity() {
 
@@ -38,14 +28,13 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
+            val navController = rememberNavController()
+
             LaraShopMovilTheme {
-                CategoriasScreen(
-                    viewModel = viewModel,
-                    onCreate = {
-
-                    }, onEdit ={ categoria ->
-
-                }
+                AppNavGraph(
+                    navController = navController,
+                    startDestination = Screen.Login.route,
+                    categoriaViewModel = viewModel,
                 )
             }
         }

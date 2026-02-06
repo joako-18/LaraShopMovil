@@ -46,7 +46,7 @@ class CategoriaViewModel (
         }
     }
 
-    private fun createCategoria(nombre: String){
+    fun createCategoria(nombre: String){
         viewModelScope.launch {
             val result = createCategoriaUseCase(nombre)
             result.fold(
