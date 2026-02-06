@@ -1,5 +1,8 @@
 package com.esaudiaz.larashopmovil.core.network
 
+import com.esaudiaz.larashopmovil.features.employee.data.datasources.remote.model.EmpleadoResponse
+import com.esaudiaz.larashopmovil.features.employee.data.datasources.remote.model.EmpleadoCreateDto
+import com.esaudiaz.larashopmovil.features.employee.data.datasources.remote.model.EmpleadoUpdateDto
 import com.esaudiaz.larashopmovil.core.network.models.*
 import retrofit2.http.*
 
@@ -7,12 +10,11 @@ interface AuthApi {
     @FormUrlEncoded
     @POST("auth/login")
     suspend fun login(
-        @Field("username") username: String,  // Es el correo
+        @Field("username") username: String,
         @Field("password") password: String
     ): TokenResponse
 }
 
-// ============ EMPLEADOS API ============
 interface EmpleadosApi {
 
     @GET("empleados/")
@@ -28,13 +30,13 @@ interface EmpleadosApi {
 
     @POST("empleados/")
     suspend fun createEmpleado(
-        @Body empleado: EmpleadoCreateRequest
+        @Body empleado: EmpleadoCreateDto
     ): EmpleadoResponse
 
     @PUT("empleados/{empleado_id}")
     suspend fun updateEmpleado(
         @Path("empleado_id") empleadoId: Int,
-        @Body empleado: EmpleadoUpdateRequest
+        @Body empleado: EmpleadoUpdateDto
     ): EmpleadoResponse
 
     @DELETE("empleados/{empleado_id}")
@@ -43,7 +45,6 @@ interface EmpleadosApi {
     )
 }
 
-// ============ PRODUCTOS API ============
 interface ProductosApi {
 
     @GET("productos/")
