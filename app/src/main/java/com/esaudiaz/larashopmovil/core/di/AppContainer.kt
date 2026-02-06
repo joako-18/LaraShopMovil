@@ -4,10 +4,11 @@ import android.content.Context
 import com.esaudiaz.larashopmovil.core.auth.TokenManager
 import com.esaudiaz.larashopmovil.core.network.AuthApi
 import com.esaudiaz.larashopmovil.core.network.AuthInterceptor
-import com.esaudiaz.larashopmovil.core.network.CategoriasApi
 import com.esaudiaz.larashopmovil.core.network.EmpleadosApi
 import com.esaudiaz.larashopmovil.core.network.NetworkConfig
 import com.esaudiaz.larashopmovil.core.network.ProductosApi
+import com.esaudiaz.larashopmovil.features.employee.data.repositories.EmpleadosRepositoryImpl
+import com.esaudiaz.larashopmovil.features.employee.domain.repositories.EmpleadosRepository
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -68,7 +69,7 @@ class AppContainer(context: Context) {
         retrofit.create(ProductosApi::class.java)
     }
 
-    val categoriasApi: CategoriasApi by lazy{
-        retrofit.create(CategoriasApi::class.java)
+    val empleadosRepository: EmpleadosRepository by lazy {
+        EmpleadosRepositoryImpl(empleadosApi)
     }
 }
