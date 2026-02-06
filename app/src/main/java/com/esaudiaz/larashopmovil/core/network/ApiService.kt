@@ -1,6 +1,14 @@
 package com.esaudiaz.larashopmovil.core.network
 
 import com.esaudiaz.larashopmovil.core.network.models.*
+import com.esaudiaz.larashopmovil.core.network.models.categorias.CategoriaCreateUpdateRequest
+import com.esaudiaz.larashopmovil.core.network.models.categorias.CategoriaResponse
+import com.esaudiaz.larashopmovil.core.network.models.productos.ProductoUpdateRequest
+import com.esaudiaz.larashopmovil.core.network.models.productos.ProductoResponse
+import com.esaudiaz.larashopmovil.core.network.models.productos.ProductoCreateRequest
+
+
+
 import retrofit2.http.*
 
 interface AuthApi {
@@ -72,4 +80,26 @@ interface ProductosApi {
     suspend fun deleteProducto(
         @Path("producto_id") productoId: Int
     )
+}
+//-------------------- CATEGORIAS
+
+interface CategoriasApi{
+    @GET("categorias/")
+    suspend fun getAllCategories(): List<CategoriaResponse>
+
+    @POST(value = "categorias/")
+    suspend fun createCategoria(
+        @Body categoria: CategoriaCreateUpdateRequest
+    ): CategoriaResponse
+
+    @PUT("categorias/{categoria_id}")
+    suspend fun updateCategoria(
+        @Path("categoria_id") categoriaId: Int,
+        @Body categoria: CategoriaCreateUpdateRequest
+    ): CategoriaResponse
+
+    @DELETE("categorias/{categoria_id}")
+    suspend fun deleteCategoria(
+        @Path("categoria_id") categoriaId: Int
+    ): Unit
 }

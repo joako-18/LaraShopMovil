@@ -4,6 +4,7 @@ import android.content.Context
 import com.esaudiaz.larashopmovil.core.auth.TokenManager
 import com.esaudiaz.larashopmovil.core.network.AuthApi
 import com.esaudiaz.larashopmovil.core.network.AuthInterceptor
+import com.esaudiaz.larashopmovil.core.network.CategoriasApi
 import com.esaudiaz.larashopmovil.core.network.EmpleadosApi
 import com.esaudiaz.larashopmovil.core.network.NetworkConfig
 import com.esaudiaz.larashopmovil.core.network.ProductosApi
@@ -65,5 +66,9 @@ class AppContainer(context: Context) {
 
     val productosApi: ProductosApi by lazy {
         retrofit.create(ProductosApi::class.java)
+    }
+
+    val categoriasApi: CategoriasApi by lazy{
+        retrofit.create(CategoriasApi::class.java)
     }
 }
