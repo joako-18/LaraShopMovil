@@ -18,34 +18,25 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.esaudiaz.larashopmovil.features.login.presentation.screens.LoginScreen
+import com.esaudiaz.larashopmovil.features.login.presentation.viewmodels.LoginViewModelFactory
 
-fun NavGraphBuilder.authGraph(navController: NavHostController) {
-
+fun NavGraphBuilder.authGraph(
+    navController: NavHostController,
+    loginViewModelFactory: LoginViewModelFactory
+) {
     composable(Screen.Login.route) {
         LoginScreen(
+            factory = loginViewModelFactory,
             onLoginSuccess = {
-                // Navegar al home y limpiar el back stack
                 navController.navigate(Screen.Home.route) {
                     popUpTo(Screen.Login.route) { inclusive = true }
                 }
-            },
-            onNavigateToRegister = {
-                navController.navigate(Screen.Register.route)
             }
         )
     }
 
     composable(Screen.Register.route) {
-        RegisterScreen(
-            onRegisterSuccess = {
-                navController.navigate(Screen.Home.route) {
-                    popUpTo(Screen.Login.route) { inclusive = true }
-                }
-            },
-            onNavigateBack = {
-                navController.popBackStack()
-            }
-        )
     }
 }
 

@@ -19,7 +19,7 @@ class CategoriasContainer(
     private val categoriaRepository: CategoriaRepository =
         CategoriaRepositoryImp(appContainer.categoriasApi)
 
-    // 🔹 UseCases
+    // 🔹 UseCasesr
     val getCategoriasUseCase = GetCategoriasUseCase(categoriaRepository)
 
     val createCategoriaUseCase = CreateCategoriaUseCase(categoriaRepository)

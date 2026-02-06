@@ -20,10 +20,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.esaudiaz.larashopmovil.features.employee.presentation.components.EmpleadoCard
+import com.esaudiaz.larashopmovil.features.employee.presentation.components.EmpleadoFormDialog
 import com.esaudiaz.larashopmovil.features.employee.presentation.viewmodels.EmpleadosViewModel
 import com.esaudiaz.larashopmovil.features.employee.presentation.viewmodels.EmpleadosViewModelFactory
+import com.esaudiaz.larashopmovil.features.employee.presentation.viewmodels.EmpleadoFormViewModelFactory
 
-// Colores LaraShop
 private val LaraShopPink = Color(0xFFE91E8C)
 private val BackgroundGray = Color(0xFFF5F5F5)
 
@@ -31,6 +32,7 @@ private val BackgroundGray = Color(0xFFF5F5F5)
 @Composable
 fun EmpleadosScreen(
     factory: EmpleadosViewModelFactory,
+    formFactory: (empleado: com.esaudiaz.larashopmovil.features.employee.domain.entities.Empleado?) -> EmpleadoFormViewModelFactory,
     modifier: Modifier = Modifier
 ) {
     val viewModel: EmpleadosViewModel = viewModel(factory = factory)
@@ -93,7 +95,6 @@ fun EmpleadosScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // Título de la lista
             Text(
                 text = "LISTA DE USUARIOS",
                 fontSize = 14.sp,
@@ -102,7 +103,6 @@ fun EmpleadosScreen(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
             )
 
-            // Contenido principal
             Box(modifier = Modifier.fillMaxSize()) {
                 when {
                     uiState.isLoading -> {
@@ -159,6 +159,30 @@ fun EmpleadosScreen(
                     }
                 }
             }
+        }
+
+        // Diálogo de crear
+        if (uiState.showCreateDialog) {
+            EmpleadoFormDialog(
+                factory = formFactory(null),
+                onDismiss = { viewModel.hideCreateDialog() },
+                onSuccess = {
+                    viewModel.hideCreateDialog()
+                    viewModel.loadEmpleados()
+                }
+            )
+        }
+
+        // Diálogo de editar
+        if (uiState.showEditDialog && uiState.selectedEmpleado != null) {
+            EmpleadoFormDialog(
+                factory = formFactory(uiState.selectedEmpleado),
+                onDismiss = { viewModel.hideEditDialog() },
+                onSuccess = {
+                    viewModel.hideEditDialog()
+                    viewModel.loadEmpleados()
+                }
+            )
         }
     }
 }

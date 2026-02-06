@@ -12,17 +12,19 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 
-fun NavGraphBuilder.mainGraph(navController: NavHostController) {
+fun NavGraphBuilder.mainGraph(
+    navController: NavHostController,
+    onLogout: () -> Unit
+) {
     composable(Screen.Home.route) {
         HomeScreen(
             onNavigateToCategorias = {
                 navController.navigate(Screen.Categorias.route)
             },
-            onLogout = {
-                navController.navigate(Screen.Login.route) {
-                    popUpTo(0) { inclusive = true }
-                }
-            }
+            onNavigateToEmpleados = {
+                navController.navigate(Screen.Empleados.route)
+            },
+            onLogout = onLogout
         )
     }
 }
@@ -31,6 +33,7 @@ fun NavGraphBuilder.mainGraph(navController: NavHostController) {
 @Composable
 fun HomeScreen(
     onNavigateToCategorias: () -> Unit,
+    onNavigateToEmpleados: () -> Unit,
     onLogout: () -> Unit
 ) {
     Scaffold(
@@ -64,6 +67,14 @@ fun HomeScreen(
                 description = "Gestionar categorías de productos",
                 icon = Icons.Default.List,
                 onClick = onNavigateToCategorias
+            )
+
+            // ← AGREGAR: Card de Empleados
+            MenuCard(
+                title = "Empleados",
+                description = "Gestionar empleados del sistema",
+                icon = Icons.Default.People,
+                onClick = onNavigateToEmpleados
             )
 
             // Placeholder para futuros módulos
