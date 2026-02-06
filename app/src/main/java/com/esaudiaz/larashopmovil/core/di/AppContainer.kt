@@ -1,12 +1,16 @@
 package com.esaudiaz.larashopmovil.core.di
 
 import android.content.Context
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import com.esaudiaz.larashopmovil.core.auth.TokenManager
 import com.esaudiaz.larashopmovil.core.network.AuthApi
 import com.esaudiaz.larashopmovil.core.network.AuthInterceptor
+import com.esaudiaz.larashopmovil.core.network.CategoriasApi
 import com.esaudiaz.larashopmovil.core.network.EmpleadosApi
 import com.esaudiaz.larashopmovil.core.network.NetworkConfig
 import com.esaudiaz.larashopmovil.core.network.ProductosApi
+import com.esaudiaz.larashopmovil.features.categorias.domain.repository.CategoriaRepository
 import com.esaudiaz.larashopmovil.features.employee.data.repositories.EmpleadosRepositoryImpl
 import com.esaudiaz.larashopmovil.features.employee.domain.repositories.EmpleadosRepository
 import okhttp3.Interceptor
@@ -65,6 +69,9 @@ class AppContainer(context: Context) {
         retrofit.create(EmpleadosApi::class.java)
     }
 
+    val categoriasApi: CategoriasApi by lazy{
+        retrofit.create(CategoriasApi::class.java)
+    }
     val productosApi: ProductosApi by lazy {
         retrofit.create(ProductosApi::class.java)
     }
