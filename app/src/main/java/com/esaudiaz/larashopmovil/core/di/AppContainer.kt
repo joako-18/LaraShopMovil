@@ -7,6 +7,8 @@ import com.esaudiaz.larashopmovil.core.network.AuthInterceptor
 import com.esaudiaz.larashopmovil.core.network.EmpleadosApi
 import com.esaudiaz.larashopmovil.core.network.NetworkConfig
 import com.esaudiaz.larashopmovil.core.network.ProductosApi
+import com.esaudiaz.larashopmovil.features.login.data.repositories.AuthRepositoryImpl
+import com.esaudiaz.larashopmovil.features.login.domain.repositories.AuthRepository
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -65,5 +67,9 @@ class AppContainer(context: Context) {
 
     val productosApi: ProductosApi by lazy {
         retrofit.create(ProductosApi::class.java)
+    }
+
+    val authRepository: AuthRepository by lazy {
+        AuthRepositoryImpl(authApi, tokenManager)
     }
 }
